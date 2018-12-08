@@ -14,11 +14,11 @@ namespace Downloader
         //Get Mime type of a given url response 
         public string GetMimeType(string url)
         {
-            //If request is valid 
-            if (HttpWebRequest.Create(url) is HttpWebRequest request)
-            {
                 try
                 {
+                    //Creates our web request
+                    var request = HttpWebRequest.Create(url);
+
                     //Stores our MIME type 
                     string contentType = "";
 
@@ -33,11 +33,6 @@ namespace Downloader
                     logger.Error(ex, "Failed to retrieve MimeType of {0}", url);
                     throw;
                 }
-
-            }
-
-            //If request is not valid, return null
-            return null;
         }
 
         public string ConvertMimeToExt(string mimeType)
