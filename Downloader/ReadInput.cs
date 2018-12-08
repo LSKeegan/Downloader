@@ -22,9 +22,11 @@ namespace Downloader
                     //Stores our MIME type 
                     string contentType = "";
 
-                    //If response was valid, then save our MIME type to contentType 
-                    if (request.GetResponse() is HttpWebResponse response)
-                        contentType = response.ContentType;
+                    //Save our response
+                    var response = request.GetResponse();
+
+                    //Grab content-type from our response 
+                    contentType = response.ContentType;
 
                     return contentType;
                 }
