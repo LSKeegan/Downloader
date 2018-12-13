@@ -1,12 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Linq;
 using Microsoft.Win32;
 
 namespace Downloader
 {
-    class ReadInput
+    class FileDownloader
     {
         //Logger
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -60,6 +59,91 @@ namespace Downloader
             return result;
         }
 
+        //Downloads response of url and returns the data in a byte array
+        public byte[] DownloadResponse(string url)
+        {
+            try
+            {
+                //Creates our web client
+                Console.WriteLine("Creating webconsole");
+                WebClient myClient = new WebClient();
+
+                //Download web response to a byte array
+                Console.WriteLine("Saving web response");
+                byte[] dataBuffer = myClient.DownloadData(url);
+
+                return dataBuffer;
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to save response of {0}", url);
+                throw;
+            }
+        }
+
+        public void DownloadResponseToFile(string url, string destination)
+        {
+            //URL response
+            byte[] response = DownloadResponse(url);
+
+            try
+            {
+                //Save our data to file
+                Console.WriteLine("Downloading {0} to file", url);
+                File.WriteAllBytes(destination, response);
+            }
+            catch(Exception ex)
+            {
+                logger.Error(ex, "Failed to save response of {0} to {1}", url, destination);
+            }
+        }
+
+        public void DownloadMultipleResponsesToFile(string urlsTextDocument, string destinationFolder)
+        {
+
+            string url, mime, extension;
+
+            //Creates folder in given directory. If folder already exists, this line is ignored. 
+            Directory.CreateDirectory(destinationFolder);
+            Console.WriteLine("Saving contents of all url's listed in {0} to folder {1}...", urlsTextDocument, destinationFolder);
+
+            //Saves our .txt to string
+            Console.WriteLine("Saving file contents of {0}...", urlsTextDocument);
+            using (StreamReader ms = new StreamReader(urlsTextDocument))
+            {
+                //Read text document until we reach the end
+                while((url = ms.ReadLine()) != null)
+                {
+
+                    //Get Mime type, and convert to its respective extension
+                    try
+                    {
+                        mime = GetMimeType(url);
+                        extension = ConvertMimeToExt(mime);
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine("Failed to save response of {0} to folder {1}", url, destinationFolder);
+                        logger.Error(ex, "Failed to save response of {0} to {1}", url, destinationFolder);
+                        continue;
+                    }
+
+                    //If extension is empty, result to .txt file
+                    if (extension.Equals(""))
+                        extension = ".txt";
+                   
+                    //This is what we will name the saved file 
+                    string fileName = destinationFolder + "/" + Path.GetFileNameWithoutExtension(url) + extension;
+
+                    //Save url to file 
+                    Console.WriteLine("Saving {0} to {1}", url, fileName);
+                    DownloadResponseToFile(url, fileName);
+                }
+            }
+
+        }
+
+        /*
         public void DownloadResponseToFile(string url, string destination)
         {
             try
@@ -83,65 +167,7 @@ namespace Downloader
             }
 
         }
-
-
-        public void ManageIncomingURLs (string fileInput, string destination)
-        {
-            //Checks file extension of given input 
-            string extension = Path.GetExtension(fileInput);
-
-            if (extension.Equals(".txt"))
-            {
-                //Saves our .txt to string
-                Console.WriteLine("Saving file contents of {0}...", fileInput);
-                string[] lines = File.ReadAllLines(fileInput);
-
-                //Check how many files we need to create / how many URLs were provided 
-                int lineCount = lines.Count();
-                Console.WriteLine("Number of URLs in document: {0}", lineCount);
-
-                //Creates folder in given directory. If folder already exists, this line is ignored. 
-                Directory.CreateDirectory(destination);
-                Console.WriteLine("Saving contents of all url's listed in {0} to folder {1}...", fileInput, destination);
-               
-                foreach (string url in lines)
-                {
-                    string mime;
-                    string ext;
-                    //Get mime type, and convert to extension
-                    try
-                    {
-                         mime = GetMimeType(url);
-                         ext = ConvertMimeToExt(mime);
-                    }
-                    catch(Exception ex)
-                    {
-                        Console.WriteLine("Failed to save response of {0} to folder {1}", url, destination);
-                        logger.Error(ex, "Failed to save response of {0} to {1}", url, destination);
-                        continue;
-                    }
-
-
-                    //If extension is empty, result to .txt file
-                    if (ext.Equals(""))
-                        ext = ".txt";
-              
-                    //This is what we will name the saved file 
-                    string fileName = destination + "/" + Path.GetFileNameWithoutExtension(url) + ext; 
-
-                    //Save url to file 
-                    Console.WriteLine("Saving {0} to {1}", url, fileName);
-                    DownloadResponseToFile(url, fileName);
-                }
-
-            }
-            else
-            {
-                Console.WriteLine("Creating file...");
-                Console.WriteLine("Saving contents of {0} to {1}.", fileInput, destination);
-                DownloadResponseToFile(fileInput, destination);
-            }
-        }
+        */
 
 
     }
