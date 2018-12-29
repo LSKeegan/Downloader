@@ -7,6 +7,7 @@ namespace Downloader
     class ResponseDownloader
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        public delegate void del(Uri url);
 
         //Returns reponse of given uri in form of byte[]
         public byte[] ConvertSingleUriToByte(Uri url)
@@ -30,15 +31,14 @@ namespace Downloader
             }
         }
 
-        public byte[] GetResponse(List<Uri> uriList)
+        public byte[] GetResponse(List<Uri> uriList, Action<Uri,byte[]> onDownloadCompleted)
         {
             //Loops over each URI in our list
             foreach (Uri url in uriList)
             {
                 try
                 {
-                    //Convert our URI to a Byte[]
-                    ConvertSingleUriToByte(url);
+                    onDownloadCompleted(url, ConvertSingleUriToByte(url));
                 }
                 catch(Exception ex)
                 {
