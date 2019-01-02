@@ -10,6 +10,44 @@ namespace Downloader
         ResponseDownloader download = new ResponseDownloader();
         ExtensionChecker getExtension = new ExtensionChecker();
 
+        public void DownloadArgInput(string text, string destination)
+        {
+            //If given input is a text file, read each line and add to URI list
+            if(Path.GetExtension(text) == ".txt")
+            {
+                using (StreamReader stream = new StreamReader(text))
+                {
+                    List<Uri> myUriList = new List<Uri>();
+                    string line = stream.ReadLine();
+
+                    while(line != null)
+                    {
+                        try
+                        {
+                            //Convert each url to a URI and add to list
+                            Uri newUri = new Uri(line);
+                            myUriList.Add(newUri);
+                            line = stream.ReadLine();
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Couldn't convert {0} to uri.",line);
+                            line = stream.ReadLine();
+                            continue;
+                        }
+                    }
+                    //Download our responses to file
+                    DownloadMultipleResponsesToFile(myUriList, destination);
+                }
+            }
+            else
+            {
+                //If only a single url, then download the single URL to file
+                Uri MyUri = new Uri(text);
+                DownloadResponseToFile(MyUri, destination);
+            }
+        }
+
 
         public void DownloadResponseToFile(Uri url, string destination)
         {
@@ -34,7 +72,7 @@ namespace Downloader
 
             //Creates folder in given directory. If folder already exists, this line is ignored. 
             Directory.CreateDirectory(destinationFolder);
-            Console.WriteLine("Saving contents of all url's listed in {0} to folder {1}...", uriList.ToString(), destinationFolder);
+            Console.WriteLine("Saving contents of all url's listed in {0} to folder {1}...", uriList, destinationFolder);
 
             //Saves our  to string
             Console.WriteLine("Saving file contents of {0}...", uriList.ToString());
