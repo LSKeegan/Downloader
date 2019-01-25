@@ -12,9 +12,9 @@ namespace Downloader
         static void Main(string[] args)
         {
             //Class that manages retrieving URI responses
-            ResponseDownloader downloadResponse = new ResponseDownloader();
+            ResponseHandler downloadResponse = new ResponseHandler();
             //Class that manages downloading responses to file 
-            FileDownloader downloadFile = new FileDownloader();
+            ResponseHandler downloadFile = new ResponseHandler();
 
             //Check for command line input 
             if ( !(args == null) && !(args.Length == 0))
@@ -33,6 +33,7 @@ namespace Downloader
                 }
             }
 
+            
             //Our list that will hold our responses
             BlockingCollection<Byte[]> byteList = new BlockingCollection<byte[]>(2);
 

@@ -4,12 +4,13 @@ using System.IO;
 
 namespace Downloader
 {
-    class FileDownloader
+    class ResponseHandler
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        ResponseDownloader download = new ResponseDownloader();
+        ResponseHandler download = new ResponseHandler();
         ExtensionChecker getExtension = new ExtensionChecker();
 
+        //Engine 
         public void DownloadArgInput(string text, string destination)
         {
             //If given input is a text file, read each line and add to URI list
@@ -44,12 +45,13 @@ namespace Downloader
             {
                 //If only a single url, then download the single URL to file
                 Uri MyUri = new Uri(text);
-                DownloadResponseToFile(MyUri, destination);
+                DownloadSingleResponseToFile(MyUri, destination);
             }
         }
+        
 
 
-        public void DownloadResponseToFile(Uri url, string destination)
+        public void DownloadSingleResponseToFile(Uri url, string destination)
         {
             //URL response
             byte[] response = download.ConvertSingleUriToByte(url);
@@ -104,7 +106,7 @@ namespace Downloader
 
                     //Save url to file 
                     Console.WriteLine("Saving {0} to {1}", url, fileName);
-                    DownloadResponseToFile(url, fileName);
+                    DownloadSingleResponseToFile(url, fileName);
                 }
             }
         }

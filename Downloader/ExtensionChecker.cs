@@ -10,6 +10,8 @@ namespace Downloader
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
     
+
+        //Engine
         //Get Mime type of a given url response 
         public string GetMimeType(Uri url)
         {
@@ -36,6 +38,7 @@ namespace Downloader
             }
         }
 
+        //Engine
         //Returns the extension that corresponds to any given mimetype
         public string ConvertMimeToExt(string mimeType)
         {
@@ -59,5 +62,7 @@ namespace Downloader
 
             return result;
         }
+    
+        
     }
 }
