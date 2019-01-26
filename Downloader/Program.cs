@@ -11,29 +11,18 @@ namespace Downloader
 
         static void Main(string[] args)
         {
-            //Class that manages retrieving URI responses
-            ResponseHandler downloadResponse = new ResponseHandler();
-            //Class that manages downloading responses to file 
-            ResponseHandler downloadFile = new ResponseHandler();
+            FileDownloader fd = new FileDownloader();
 
             //Check for command line input 
-            if ( !(args == null) && !(args.Length == 0))
+            if( (args[0] != null) && (args[1] != null) )
             {
-                try
-                {
-                    string Url = args[0];
-                    Console.WriteLine(Url);
-                    string destination = args[1];
-                    Console.WriteLine(destination);
-                    downloadFile.DownloadArgInput(Url, destination);
-                }
-                catch
-                {
-                    logger.Error("Failed to get contents of args[1] and/or args[2]");
-                }
+                string url = args[0];
+                string destination = args[1];
+
+                fd.DownloadArgInput(url, destination);
             }
 
-            
+            /*
             //Our list that will hold our responses
             BlockingCollection<Byte[]> byteList = new BlockingCollection<byte[]>(2);
 
@@ -44,7 +33,8 @@ namespace Downloader
             uriList.Add(test1);
             uriList.Add(test2);
             uriList.Add(test3);
-            
+            */
+            /*
             Action<Uri, byte[]> onDownloadCompleted = (Uri, data) =>
             {
                 Console.WriteLine("Downloaded: {0}  Here's my data: {1}", Uri, data);
@@ -53,9 +43,10 @@ namespace Downloader
 
                 byteList.TryTake(out data);
             };
+          
 
             downloadResponse.GetResponse(uriList, onDownloadCompleted);
-           
+           */
             Console.ReadKey();
         }
     }

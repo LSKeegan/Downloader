@@ -8,10 +8,10 @@ namespace Downloader
         //Get Webresponses from a collection of URI's
         void GetResponse(IEnumerable<Uri> uriList, Action<Uri, byte[]> onResponseGathered);
 
-        //Download the web response of one URI to file 
-        void DownloadSingleResponseToFile(Uri url, string destination);
+        //Download Webresponses to Directory 
+        void DownloadResponseToDirectory(IEnumerable<Uri> uriList, string Directory);
 
-        //Download the web response of 2+ URI's to file 
-        void DownloadMultipleResponsesToFile(IEnumerable<Uri> uriList, string destinationFolder);
+        //Download a single WebResponse to File 
+        void DownloadResponseToFile(Uri url, string Destination);
     }
 }
