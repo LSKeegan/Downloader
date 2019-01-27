@@ -58,6 +58,10 @@ namespace Downloader
             //Result is our extension. If it's not null, we return the result as string. If it is null, we return an empty string. 
             result = value != null ? value.ToString() : string.Empty;
 
+            //If extension is empty, result to .txt file
+            if (result.Equals(""))
+                result = ".txt";
+
             return result;
         }
       

@@ -9,8 +9,8 @@ namespace DownloaderTestMain
     {
         static void Main(string[] args)
         {
-            /*
-            ResponseDownloader responseHandler = new ResponseDownloader();
+            
+            //ResponseDownloader responseHandler = new ResponseDownloader();
 
             //Our list that will hold our responses
             BlockingCollection<Byte[]> byteList = new BlockingCollection<byte[]>(2);
@@ -35,8 +35,8 @@ namespace DownloaderTestMain
             };
           
 
-            responseHandler.GetResponse(uriList, onDownloadCompleted);
-           */
+            //responseHandler.GetResponse(uriList, onDownloadCompleted);
+           
 
         }
     }

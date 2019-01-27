@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Collections.Generic;
 
 namespace Downloader
 {
@@ -22,6 +23,22 @@ namespace Downloader
             catch(Exception ex)
             {
                 throw;
+            }
+        }
+
+        //Returns response of each URI in IEnumerable
+        public void GetMultipleWebResponses(IEnumerable<Uri> uriList, Action<Uri, byte[]> onResponseGathered)
+        {
+            foreach(Uri url in uriList)
+            {
+                try
+                {
+                    onResponseGathered(url, GetSingleWebResponse(url));
+                }
+                catch
+                {
+                    continue;
+                }
             }
         }
 

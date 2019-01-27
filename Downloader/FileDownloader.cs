@@ -35,6 +35,7 @@ namespace Downloader
             //Creates folder in given directory. If folder already exists, this line is ignored. 
             Directory.CreateDirectory(destinationFolder);
 
+            /*
             foreach(Uri url in uriList)
             {
                 //Get Mime type, and convert to its respective extension
@@ -49,10 +50,6 @@ namespace Downloader
                     continue;
                 }
 
-                //If extension is empty, result to .txt file
-                if (extension.Equals(""))
-                    extension = ".txt";
-
                 //This is what we will name the saved file 
                 string fileName = destinationFolder + "/" + Path.GetFileNameWithoutExtension(url.ToString()) + extension;
 
@@ -60,7 +57,36 @@ namespace Downloader
                 Console.WriteLine("Saving {0} to {1}", url, fileName);
                 DownloadSingleResponseToFile(url, fileName);
             }
-        }
+            */
 
+
+        }
+        
+        /*
+        Action<Uri, byte[]> onDownloadCompleted = (Uri, data) =>
+        {
+            //Variables that hold our mime type and extension type of our web responses 
+            string mime, extension;
+
+           
+            //Get Mime type, and convert to its respective extension
+            try
+            {
+                mime = ex.GetMimeType(Uri);
+                extension = extensionChecker.ConvertMimeToExt(mime);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                continue;
+            }
+
+            Console.WriteLine("Downloaded: {0}  Here's my data: {1}", Uri, data);
+            byteList.Add(data);
+            Console.WriteLine("Added: {0} to my List", Uri);
+
+            byteList.TryTake(out data);
+        };
+        */
     }
 }
