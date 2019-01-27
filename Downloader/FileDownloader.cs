@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 
 namespace Downloader
 {
@@ -9,8 +8,6 @@ namespace Downloader
     {
         ResponseGrabber responseGrabber = new ResponseGrabber();
         ExtensionChecker extensionChecker = new ExtensionChecker();
-
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public void DownloadArgInput(string text, string destination)
         {
@@ -64,7 +61,8 @@ namespace Downloader
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Failed to save response of {0} to {1}", url.ToString(), destination);
+                Console.WriteLine(ex.ToString());
+                throw;
             }
         }
 
@@ -86,7 +84,7 @@ namespace Downloader
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex, "Failed to save response of {0} to {1}", url, destinationFolder);
+                    Console.WriteLine(ex.ToString());
                     continue;
                 }
 

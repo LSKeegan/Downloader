@@ -5,8 +5,6 @@ namespace Downloader
 {
     public class ResponseGrabber
     {
-        private static NLog.Logger responseGrabberlogger = NLog.LogManager.GetCurrentClassLogger();
-        ExtensionChecker getExtension = new ExtensionChecker();
 
         //Returns reponse of given uri in form of byte[]
         public byte[] GetSingleWebResponse(Uri url)
@@ -21,9 +19,8 @@ namespace Downloader
 
                 return dataBuffer;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                responseGrabberlogger.Error(ex, "Failed to save response of {0}", url);
                 throw;
             }
         }

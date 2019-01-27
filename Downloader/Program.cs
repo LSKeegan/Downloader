@@ -8,7 +8,7 @@ namespace Downloader
     {
         static void Main(string[] args)
         {
-            ResponseHandler responseHandler = new ResponseHandler();
+            FileDownloader fileDownload = new FileDownloader();
 
             //Check for command line input 
             if( (args[0] != null) && (args[1] != null) )
@@ -41,14 +41,14 @@ namespace Downloader
                         }
 
                         //Download our responses to file
-                        responseHandler.DownloadResponsesToDirectory(myUriList, destination);
+                        fileDownload.DownloadMultipleResponsesToFile(myUriList, destination);
                     }
                 }
                 else
                 {
                     //If only a single url, then download the single URL to file
                     Uri MyUri = new Uri(text);
-                    responseHandler.DownloadResponseToFile(MyUri, destination);
+                    fileDownload.DownloadSingleResponseToFile(MyUri, destination);
                 }
             }
 
