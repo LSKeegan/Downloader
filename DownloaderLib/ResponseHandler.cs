@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Downloader
 {
-    class ResponseHandler : IWebResponseHandler
+    public class ResponseHandler : IWebResponseHandler
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         ResponseGrabber responseGrabber = new ResponseGrabber();
@@ -27,7 +27,7 @@ namespace Downloader
             }
         }
 
-        public void DownloadResponseToDirectory(IEnumerable<Uri> uriList, string directory)
+        public void DownloadResponsesToDirectory(IEnumerable<Uri> uriList, string directory)
         {
             try
             {

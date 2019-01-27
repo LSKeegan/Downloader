@@ -9,8 +9,6 @@ namespace Downloader
         //Logger
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-    
-
         //Engine
         //Get Mime type of a given url response 
         public string GetMimeType(Uri url)

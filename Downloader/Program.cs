@@ -1,53 +1,57 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Downloader
 {
-
     class Program
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-
         static void Main(string[] args)
         {
-            FileDownloader fd = new FileDownloader();
+            ResponseHandler responseHandler = new ResponseHandler();
 
             //Check for command line input 
             if( (args[0] != null) && (args[1] != null) )
             {
-                string url = args[0];
+                string text = args[0];
                 string destination = args[1];
 
-                fd.DownloadArgInput(url, destination);
+                if (Path.GetExtension(text) == ".txt")
+                {
+                    using (StreamReader stream = new StreamReader(text))
+                    {
+                        List<Uri> myUriList = new List<Uri>();
+                        string line = stream.ReadLine();
+
+                        while (line != null)
+                        {
+                            try
+                            {
+                                //Convert each url to a URI and add to list
+                                Uri newUri = new Uri(line);
+                                myUriList.Add(newUri);
+                                line = stream.ReadLine();
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Couldn't convert {0} to uri.", line);
+                                line = stream.ReadLine();
+                                continue;
+                            }
+                        }
+
+                        //Download our responses to file
+                        responseHandler.DownloadResponsesToDirectory(myUriList, destination);
+                    }
+                }
+                else
+                {
+                    //If only a single url, then download the single URL to file
+                    Uri MyUri = new Uri(text);
+                    responseHandler.DownloadResponseToFile(MyUri, destination);
+                }
             }
 
-            /*
-            //Our list that will hold our responses
-            BlockingCollection<Byte[]> byteList = new BlockingCollection<byte[]>(2);
-
-            Uri test1 = new Uri("https://www.reddit.com/r/Saints/comments/a7610k/official_week_15_game_thread_new_orleans_saints/");
-            Uri test2 = new Uri("https://docs.microsoft.com/en-us/dotnet/standard/collections/thread-safe/blockingcollection-overview");
-            Uri test3 = new Uri("https://twitter.com/");
-            List<Uri> uriList = new List<Uri>();
-            uriList.Add(test1);
-            uriList.Add(test2);
-            uriList.Add(test3);
-            */
-            /*
-            Action<Uri, byte[]> onDownloadCompleted = (Uri, data) =>
-            {
-                Console.WriteLine("Downloaded: {0}  Here's my data: {1}", Uri, data);
-                byteList.Add(data);
-                Console.WriteLine("Added: {0} to my List", Uri);
-
-                byteList.TryTake(out data);
-            };
-          
-
-            downloadResponse.GetResponse(uriList, onDownloadCompleted);
-           */
-            Console.ReadKey();
         }
     }
 }

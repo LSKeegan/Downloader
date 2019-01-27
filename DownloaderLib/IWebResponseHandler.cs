@@ -9,7 +9,7 @@ namespace Downloader
         void GetResponse(IEnumerable<Uri> uriList, Action<Uri, byte[]> onResponseGathered);
 
         //Download Webresponses to Directory 
-        void DownloadResponseToDirectory(IEnumerable<Uri> uriList, string Directory);
+        void DownloadResponsesToDirectory(IEnumerable<Uri> uriList, string Directory);
 
         //Download a single WebResponse to File 
         void DownloadResponseToFile(Uri url, string Destination);
