@@ -41,7 +41,7 @@ namespace Downloader
                         }
 
                         //Download our responses to file
-                        fileDownload.DownloadMultipleResponsesToFile(myUriList, destination);
+                        fileDownload.DownloadMultipleResponsesToDirectory(myUriList, destination);
                     }
                 }
                 else

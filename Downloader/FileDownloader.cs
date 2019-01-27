@@ -9,45 +9,6 @@ namespace Downloader
         ResponseGrabber responseGrabber = new ResponseGrabber();
         ExtensionChecker extensionChecker = new ExtensionChecker();
 
-        public void DownloadArgInput(string text, string destination)
-        {
-            //If given input is a text file, read each line and add to URI list
-            if (Path.GetExtension(text) == ".txt")
-            {
-                using (StreamReader stream = new StreamReader(text))
-                {
-                    List<Uri> myUriList = new List<Uri>();
-                    string line = stream.ReadLine();
-
-                    while (line != null)
-                    {
-                        try
-                        {
-                            //Convert each url to a URI and add to list
-                            Uri newUri = new Uri(line);
-                            myUriList.Add(newUri);
-                            line = stream.ReadLine();
-                        }
-                        catch
-                        {
-                            Console.WriteLine("Couldn't convert {0} to uri.", line);
-                            line = stream.ReadLine();
-                            continue;
-                        }
-                    }
-
-                    //Download our responses to file
-                    DownloadMultipleResponsesToFile(myUriList, destination);
-                }
-            }
-            else
-            {
-                //If only a single url, then download the single URL to file
-                Uri MyUri = new Uri(text);
-                DownloadSingleResponseToFile(MyUri, destination);
-            }
-        }
-
         public void DownloadSingleResponseToFile(Uri url, string destination)
         {
             //URL response
@@ -66,7 +27,7 @@ namespace Downloader
             }
         }
 
-        public void DownloadMultipleResponsesToFile(IEnumerable<Uri> uriList, string destinationFolder)
+        public void DownloadMultipleResponsesToDirectory(IEnumerable<Uri> uriList, string destinationFolder)
         {
             //Variables that hold our mime type and extension type of our web responses 
             string mime, extension;
