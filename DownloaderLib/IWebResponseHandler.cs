@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Downloader
 { 
-    interface IWebResponseHandler
+    public interface IWebResponseHandler
     {
         //Get Webresponses from a collection of URI's
         void GetResponse(IEnumerable<Uri> uriList, Action<Uri, byte[]> onResponseGathered);

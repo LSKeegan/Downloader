@@ -3,7 +3,7 @@ using System.Net;
 
 namespace Downloader
 {
-    class ResponseGrabber
+    public class ResponseGrabber
     {
         private static NLog.Logger responseGrabberlogger = NLog.LogManager.GetCurrentClassLogger();
         ExtensionChecker getExtension = new ExtensionChecker();

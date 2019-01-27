@@ -53,6 +53,10 @@
       <Project>{4b4433ea-fb5f-43f5-bc54-a6bb346fa24c}</Project>
       <Name>DownloaderLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Downloader\Downloader.csproj">
+      <Project>{1519baf0-068c-4050-8de3-790ba4abe3a5}</Project>
+      <Name>Downloader</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

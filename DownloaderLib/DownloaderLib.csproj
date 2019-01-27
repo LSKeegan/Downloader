@@ -55,7 +55,6 @@
     <Compile Include="IWebResponseHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseGrabber.cs" />
-    <Compile Include="ResponseHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

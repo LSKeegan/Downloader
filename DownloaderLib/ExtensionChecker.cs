@@ -4,7 +4,7 @@ using System.Net;
 
 namespace Downloader
 {
-    class ExtensionChecker
+    public class ExtensionChecker
     {
         //Logger
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();

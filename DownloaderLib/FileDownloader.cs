@@ -5,7 +5,7 @@ using System.Net;
 
 namespace Downloader
 {
-    class FileDownloader
+    public class FileDownloader
     {
         ResponseGrabber responseGrabber = new ResponseGrabber();
         ExtensionChecker extensionChecker = new ExtensionChecker();
