@@ -52,7 +52,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="ExtensionChecker.cs" />
     <Compile Include="FileDownloader.cs" />
-    <Compile Include="IWebResponseHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseGrabber.cs" />
   </ItemGroup>

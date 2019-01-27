@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Downloader
 {
-    public class ResponseHandler : IWebResponseHandler
+    public class ResponseHandler
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         ResponseGrabber responseGrabber = new ResponseGrabber();
