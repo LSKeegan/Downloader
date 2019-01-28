@@ -11,7 +11,7 @@ namespace Downloader
             FileDownloader fileDownload = new FileDownloader();
 
             //Check for command line input 
-            if( (args[0] != null) && (args[1] != null) )
+            if( (args.Length != 0) && (args[0] != null) && (args[1] != null) )
             {
                 string text = args[0];
                 string destination = args[1];
