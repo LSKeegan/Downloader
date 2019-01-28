@@ -6,15 +6,15 @@ namespace Downloader
 {
     public class FileDownloader
     {
+        ResponseGrabber responseGrabber = new ResponseGrabber();
+        ExtensionChecker extensionChecker = new ExtensionChecker();
+
         private string directory; 
 
         public FileDownloader(string directory)
         {
             this.directory = directory;
         }
-
-        ResponseGrabber responseGrabber = new ResponseGrabber();
-        ExtensionChecker extensionChecker = new ExtensionChecker();
 
         //If 2+ WebResponses need to be downloaded, this is where they will be saved 
         //private string directory;
@@ -41,7 +41,7 @@ namespace Downloader
         {
             //Where we will be saving our responses
             directory = destinationFolder;
-
+     
             //Creates folder in given directory. If folder already exists, this line is ignored. 
             Directory.CreateDirectory(destinationFolder);
 
