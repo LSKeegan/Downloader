@@ -20,7 +20,7 @@ namespace Downloader
 
                 return dataBuffer;
             }
-            catch(Exception ex)
+            catch
             {
                 throw;
             }

@@ -9,6 +9,8 @@ namespace Downloader
         ResponseGrabber responseGrabber = new ResponseGrabber();
         ExtensionChecker extensionChecker = new ExtensionChecker();
 
+        private string _destinationFolder;
+
         public void DownloadSingleResponseToFile(Uri url, string destination)
         {
             //URL response
@@ -27,66 +29,44 @@ namespace Downloader
             }
         }
 
+        //Saves responses of our URI list to directory 
         public void DownloadMultipleResponsesToDirectory(IEnumerable<Uri> uriList, string destinationFolder)
         {
-            //Variables that hold our mime type and extension type of our web responses 
-            string mime, extension;
-
             //Creates folder in given directory. If folder already exists, this line is ignored. 
             Directory.CreateDirectory(destinationFolder);
 
-            /*
-            foreach(Uri url in uriList)
-            {
-                //Get Mime type, and convert to its respective extension
-                try
-                {
-                    mime = extensionChecker.GetMimeType(url);
-                    extension = extensionChecker.ConvertMimeToExt(mime);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                    continue;
-                }
+            _destinationFolder = destinationFolder;
 
-                //This is what we will name the saved file 
-                string fileName = destinationFolder + "/" + Path.GetFileNameWithoutExtension(url.ToString()) + extension;
-
-                //Save response to directory 
-                Console.WriteLine("Saving {0} to {1}", url, fileName);
-                DownloadSingleResponseToFile(url, fileName);
-            }
-            */
-
-
+            //Get all of our web responses and save them to our directory
+            responseGrabber.GetMultipleWebResponses(uriList, OnDownloadCompleted);
         }
-        
-        /*
-        Action<Uri, byte[]> onDownloadCompleted = (Uri, data) =>
+
+        //Saves our web response to directory
+        public void OnDownloadCompleted(Uri url, Byte[] response)
         {
             //Variables that hold our mime type and extension type of our web responses 
             string mime, extension;
 
-           
             //Get Mime type, and convert to its respective extension
             try
             {
-                mime = ex.GetMimeType(Uri);
+                mime = extensionChecker.GetMimeType(url);
                 extension = extensionChecker.ConvertMimeToExt(mime);
+
+                //This is what we will name the saved file 
+                string fileName = _destinationFolder + "/" + Path.GetFileNameWithoutExtension(url.ToString()) + extension;
+
+                //Save response to directory 
+                Console.WriteLine("Saving {0} to {1}", url, fileName);
+                File.WriteAllBytes(fileName, response);
+                Console.WriteLine("Successfully Saved {0} to {1}", url, fileName);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                continue;
+                throw;
             }
-
-            Console.WriteLine("Downloaded: {0}  Here's my data: {1}", Uri, data);
-            byteList.Add(data);
-            Console.WriteLine("Added: {0} to my List", Uri);
-
-            byteList.TryTake(out data);
-        };
-        */
+        }
+        
     }
 }
