@@ -6,6 +6,7 @@ namespace Downloader
 {
     public class ResponseGrabber
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         //Returns reponse of given uri in form of byte[]
         public byte[] GetSingleWebResponse(Uri url)
@@ -20,8 +21,9 @@ namespace Downloader
 
                 return dataBuffer;
             }
-            catch
+            catch(Exception e)
             {
+                log.Error(e);
                 throw;
             }
         }
@@ -35,8 +37,9 @@ namespace Downloader
                 {
                     onResponseGathered(url, GetSingleWebResponse(url));
                 }
-                catch
+                catch(Exception e)
                 {
+                    log.Error(e);
                     continue;
                 }
             }

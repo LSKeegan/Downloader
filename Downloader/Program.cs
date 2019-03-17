@@ -6,6 +6,8 @@ namespace Downloader
 {
     class Program
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         static void Main(string[] args)
         {
             FileDownloader fileDownload = new FileDownloader();
@@ -32,8 +34,9 @@ namespace Downloader
                                 myUriList.Add(newUri);
                                 line = stream.ReadLine();
                             }
-                            catch
+                            catch(Exception e)
                             {
+                                log.Error(e);
                                 Console.WriteLine("Couldn't convert {0} to uri.", line);
                                 line = stream.ReadLine();
                                 continue;

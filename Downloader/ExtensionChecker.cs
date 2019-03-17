@@ -6,8 +6,7 @@ namespace Downloader
 {
     public class ExtensionChecker
     {
-        //Logger
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         //Engine
         //Get Mime type of a given url response 
@@ -29,9 +28,9 @@ namespace Downloader
 
                 return contentType;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                logger.Error(ex, "Failed to retrieve MimeType of {0}", url);
+                log.Error(e);
                 throw;
             }
         }

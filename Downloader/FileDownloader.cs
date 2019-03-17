@@ -9,6 +9,8 @@ namespace Downloader
         ResponseGrabber responseGrabber = new ResponseGrabber();
         ExtensionChecker extensionChecker = new ExtensionChecker();
 
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private string _destinationFolder;
 
         public void DownloadSingleResponseToFile(Uri url, string destination)
@@ -22,9 +24,10 @@ namespace Downloader
                 Console.WriteLine("Downloading {0} to file", url.ToString());
                 File.WriteAllBytes(destination, response);
             }
-            catch (Exception ex)
+            catch(Exception e)
             {
-                Console.WriteLine(ex.ToString());
+                log.Error(e);
+                Console.WriteLine(e.ToString());
                 throw;
             }
         }
@@ -61,9 +64,10 @@ namespace Downloader
                 File.WriteAllBytes(fileName, response);
                 Console.WriteLine("Successfully Saved {0} to {1}", url, fileName);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine(ex.ToString());
+                log.Error(e);
+                Console.WriteLine(e.ToString());
                 throw;
             }
         }
