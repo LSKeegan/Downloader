@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace DownloaderTestMain
+namespace DownloaderStaging
 {
-    class DownloaderTest
+    class Program
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Downloader
 {
@@ -11,15 +12,23 @@ namespace Downloader
         //Returns reponse of given uri in form of byte[]
         public byte[] GetSingleWebResponse(Uri url)
         {
+            //Create web request using our Uri
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
             try
             {
-                //Creates our web client
-                WebClient myClient = new WebClient();
-
-                //Download web response to a byte array
-                byte[] dataBuffer = myClient.DownloadData(url);
-
-                return dataBuffer;
+                //Stream response into MemoryStream, then return a byte array
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        using (Stream stream = response.GetResponseStream())
+                        {
+                            stream.CopyTo(ms);
+                            return ms.ToArray();
+                        }
+                    }
+                }
             }
             catch(Exception e)
             {
